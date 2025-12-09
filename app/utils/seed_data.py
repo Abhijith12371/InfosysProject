@@ -6,8 +6,13 @@ Run this to initialize the database with test data.
 from datetime import datetime, timedelta
 import random
 from sqlalchemy.orm import Session
+from passlib.context import CryptContext
 
-from app.database.models import Flight
+from app.database.models import Flight, User
+
+
+# Password hashing
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 # Sample data
@@ -36,6 +41,38 @@ def generate_flight_number(airline: str, index: int) -> str:
     return f"{prefix}{100 + index}"
 
 
+def create_admin_user(db: Session) -> None:
+    """
+    Create a default admin user if not exists.
+    
+    Credentials:
+    - Email: admin@skybook.com
+    - Password: admin123
+    """
+    admin_email = "admin@skybook.com"
+    
+    # Check if admin already exists
+    existing_admin = db.query(User).filter(User.email == admin_email).first()
+    if existing_admin:
+        # Make sure they're an admin
+        if not existing_admin.is_admin:
+            existing_admin.is_admin = 1
+            db.commit()
+            print(f"✅ Updated {admin_email} to admin status.")
+        return
+    
+    # Create admin user
+    admin_user = User(
+        name="Admin User",
+        email=admin_email,
+        password_hash=pwd_context.hash("admin123"),
+        is_admin=1
+    )
+    db.add(admin_user)
+    db.commit()
+    print(f"✅ Created admin user: {admin_email} / admin123")
+
+
 def generate_sample_flights(db: Session, num_flights: int = 50) -> list:
     """
     Generate sample flights for testing.
@@ -47,6 +84,9 @@ def generate_sample_flights(db: Session, num_flights: int = 50) -> list:
     Returns:
         List of created Flight objects
     """
+    # First, ensure admin user exists
+    create_admin_user(db)
+    
     flights = []
     
     # Check if flights already exist
@@ -118,3 +158,4 @@ def clear_all_data(db: Session) -> None:
     db.query(User).delete()
     db.commit()
     print("All data cleared from database.")
+

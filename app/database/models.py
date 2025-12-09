@@ -37,6 +37,7 @@ class User(Base):
     email = Column(String(100), unique=True, nullable=False, index=True)
     mobile_no = Column(String(15), nullable=True)
     password_hash = Column(String(255), nullable=False)
+    is_admin = Column(Integer, default=0)  # 0 = regular user, 1 = admin
     created_at = Column(DateTime, default=datetime.utcnow)
 
     # Relationship to bookings

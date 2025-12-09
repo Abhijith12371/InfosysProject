@@ -1,10 +1,7 @@
 import axios from 'axios';
 
-const API_BASE_URL = '/api';
-
-// Create axios instance
 const api = axios.create({
-    baseURL: API_BASE_URL,
+    baseURL: '/api',
     headers: {
         'Content-Type': 'application/json',
     },
@@ -42,6 +39,19 @@ export const bookingAPI = {
     getBookingHistory: () => api.get('/bookings/history'),
     getBookingByPNR: (pnr) => api.get(`/bookings/pnr/${pnr}`),
     cancelBooking: (bookingId) => api.delete(`/bookings/${bookingId}`),
+};
+
+// Admin API
+export const adminAPI = {
+    getStats: () => api.get('/admin/stats'),
+    getUsers: () => api.get('/admin/users'),
+    toggleUserAdmin: (userId) => api.put(`/admin/users/${userId}/toggle-admin`),
+    getAllBookings: (statusFilter) => api.get('/admin/bookings', { params: { status_filter: statusFilter } }),
+    updateBookingStatus: (bookingId, status) => api.put(`/admin/bookings/${bookingId}/status`, { status }),
+    getFlights: () => api.get('/admin/flights'),
+    createFlight: (data) => api.post('/admin/flights', data),
+    updateFlight: (flightId, data) => api.put(`/admin/flights/${flightId}`, data),
+    deleteFlight: (flightId) => api.delete(`/admin/flights/${flightId}`),
 };
 
 export default api;

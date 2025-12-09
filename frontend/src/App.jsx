@@ -8,6 +8,8 @@ import FlightSearch from './pages/FlightSearch';
 import FlightDetails from './pages/FlightDetails';
 import BookingFlow from './pages/BookingFlow';
 import BookingHistory from './pages/BookingHistory';
+import ETicket from './pages/ETicket';
+import AdminDashboard from './pages/AdminDashboard';
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
             <Route path="flights/:id" element={<FlightDetails />} />
             <Route path="booking/:bookingId" element={<BookingFlow />} />
             <Route path="bookings" element={<BookingHistory />} />
+            <Route path="ticket/:bookingId" element={<ETicket />} />
+            <Route path="admin" element={<AdminDashboard />} />
           </Route>
         </Routes>
       </BrowserRouter>

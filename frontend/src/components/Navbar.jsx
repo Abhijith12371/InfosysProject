@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Plane, User, LogOut, History, Search } from 'lucide-react';
+import { Plane, User, LogOut, History, Search, Shield } from 'lucide-react';
 
 const Navbar = () => {
     const { isAuthenticated, user, logout } = useAuth();
@@ -42,6 +42,13 @@ const Navbar = () => {
                                     <History className="h-4 w-4" />
                                     <span>My Bookings</span>
                                 </Link>
+                                <Link
+                                    to="/admin"
+                                    className="text-white/90 hover:text-white flex items-center space-x-1 px-3 py-2 rounded-lg hover:bg-white/10 transition-all"
+                                >
+                                    <Shield className="h-4 w-4" />
+                                    <span>Admin</span>
+                                </Link>
                                 <div className="flex items-center space-x-3">
                                     <div className="flex items-center space-x-2 bg-white/10 px-3 py-2 rounded-lg">
                                         <User className="h-4 w-4 text-white" />
@@ -80,3 +87,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

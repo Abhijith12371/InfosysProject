@@ -97,10 +97,10 @@ const BookingHistory = () => {
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
                 <div className="flex items-center gap-4">
                     <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${booking.status === 'CONFIRMED'
-                            ? 'bg-green-500/20'
-                            : booking.status === 'CANCELLED'
-                                ? 'bg-red-500/20'
-                                : 'bg-purple-500/20'
+                        ? 'bg-green-500/20'
+                        : booking.status === 'CANCELLED'
+                            ? 'bg-red-500/20'
+                            : 'bg-purple-500/20'
                         }`}>
                         {booking.status === 'CONFIRMED' ? (
                             <Check className="h-6 w-6 text-green-400" />
@@ -156,6 +156,16 @@ const BookingHistory = () => {
                         <p className="text-gray-400 text-xs">Amount</p>
                         <p className="text-white font-bold">₹{booking.final_price?.toLocaleString()}</p>
                     </div>
+
+                    {/* View Ticket Button for confirmed bookings */}
+                    {booking.status === 'CONFIRMED' && (
+                        <button
+                            onClick={() => navigate(`/ticket/${booking.id}`)}
+                            className="bg-green-500/20 text-green-400 px-4 py-2 rounded-lg hover:bg-green-500/30 transition-all text-sm border border-green-500/30"
+                        >
+                            View Ticket
+                        </button>
+                    )}
 
                     {showCancel && booking.status !== 'CANCELLED' && booking.status !== 'FAILED' && (
                         <button

@@ -19,7 +19,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.database.connection import init_db, SessionLocal
-from app.routes import user_routes, flight_routes, booking_routes
+from app.routes import user_routes, flight_routes, booking_routes, admin_routes
 from app.utils.seed_data import generate_sample_flights
 from app.tasks.demand_simulator import simulate_demand_changes
 
@@ -72,6 +72,7 @@ A comprehensive flight booking simulator built with FastAPI.
 - **Multi-Step Booking**: Seat selection → Passenger info → Payment
 - **Concurrency Control**: Prevents double booking with database locks
 - **PNR Generation**: Unique booking confirmation codes
+- **Admin Panel**: Manage flights, bookings, and users
 
 ### Booking Flow:
 1. `POST /api/bookings/select-seat` - Reserve a seat
@@ -98,6 +99,7 @@ app.add_middleware(
 app.include_router(user_routes.router)
 app.include_router(flight_routes.router)
 app.include_router(booking_routes.router)
+app.include_router(admin_routes.router)
 
 
 # Root endpoint
