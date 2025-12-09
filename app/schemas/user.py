@@ -45,6 +45,7 @@ class UserResponse(BaseModel):
     name: str
     email: str
     mobile_no: Optional[str] = None
+    is_admin: int = 0
     created_at: datetime
 
     class Config:

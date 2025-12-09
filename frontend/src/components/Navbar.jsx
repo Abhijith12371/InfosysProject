@@ -42,13 +42,15 @@ const Navbar = () => {
                                     <History className="h-4 w-4" />
                                     <span>My Bookings</span>
                                 </Link>
-                                <Link
-                                    to="/admin"
-                                    className="text-white/90 hover:text-white flex items-center space-x-1 px-3 py-2 rounded-lg hover:bg-white/10 transition-all"
-                                >
-                                    <Shield className="h-4 w-4" />
-                                    <span>Admin</span>
-                                </Link>
+                                {user?.is_admin === 1 && (
+                                    <Link
+                                        to="/admin"
+                                        className="text-white/90 hover:text-white flex items-center space-x-1 px-3 py-2 rounded-lg hover:bg-white/10 transition-all font-semibold bg-white/5 border border-white/10"
+                                    >
+                                        <Shield className="h-4 w-4 text-purple-200" />
+                                        <span>Admin Dashboard</span>
+                                    </Link>
+                                )}
                                 <div className="flex items-center space-x-3">
                                     <div className="flex items-center space-x-2 bg-white/10 px-3 py-2 rounded-lg">
                                         <User className="h-4 w-4 text-white" />

@@ -69,6 +69,7 @@ def get_profile(current_user: User = Depends(get_current_user)):
         name=current_user.name,
         email=current_user.email,
         mobile_no=current_user.mobile_no,
+        is_admin=current_user.is_admin or 0,
         created_at=current_user.created_at
     )
 
@@ -81,5 +82,6 @@ def get_current_user_info(current_user: User = Depends(get_current_user)):
         name=current_user.name,
         email=current_user.email,
         mobile_no=current_user.mobile_no,
+        is_admin=current_user.is_admin or 0,
         created_at=current_user.created_at
     )
