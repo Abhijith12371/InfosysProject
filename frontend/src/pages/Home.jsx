@@ -1,139 +1,95 @@
-import { Link } from 'react-router-dom';
-import { Plane, Search, CreditCard, CheckCircle, Zap, Shield, Clock } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { ArrowRight, Sparkles } from 'lucide-react';
 
 const Home = () => {
+    const navigate = useNavigate();
+
     return (
-        <div className="space-y-16">
-            {/* Hero Section */}
-            <section className="text-center py-16">
-                <div className="relative">
-                    <div className="absolute inset-0 flex items-center justify-center opacity-10">
-                        <Plane className="h-96 w-96 text-purple-500" />
-                    </div>
-                    <div className="relative z-10">
-                        <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
-                            Book Your Flight
-                            <span className="block bg-gradient-to-r from-purple-400 via-pink-500 to-orange-400 bg-clip-text text-transparent">
-                                In Seconds
-                            </span>
-                        </h1>
-                        <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-8">
-                            Experience seamless flight booking with dynamic pricing, instant confirmations,
-                            and a beautiful interface designed for the modern traveler.
-                        </p>
-                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <Link
-                                to="/flights"
-                                className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-purple-700 hover:to-pink-700 transition-all shadow-lg shadow-purple-500/25 flex items-center justify-center gap-2"
-                            >
-                                <Search className="h-5 w-5" />
-                                Search Flights
-                            </Link>
-                            <Link
-                                to="/signup"
-                                className="bg-white/10 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white/20 transition-all border border-white/20 flex items-center justify-center gap-2"
-                            >
-                                Get Started
-                            </Link>
-                        </div>
+        <div className="flex flex-col items-center justify-center min-h-[85vh] relative overflow-hidden">
+            {/* Background Decorative Elements */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                {/* Floating Orbs */}
+                <div className="absolute top-20 left-20 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '0s' }}></div>
+                <div className="absolute top-40 right-20 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+                <div className="absolute bottom-20 left-1/3 w-80 h-80 bg-pink-500/15 rounded-full blur-3xl animate-float" style={{ animationDelay: '4s' }}></div>
+            </div>
+
+            {/* Hero Content */}
+            <div className="w-full max-w-5xl px-4 flex flex-col items-center text-center relative z-10">
+                {/* Badge */}
+                <div className="animate-fade-in-up mb-8" style={{ animationDelay: '0.1s' }}>
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-sm text-purple-300 border border-purple-500/20">
+                        <Sparkles className="w-4 h-4 text-purple-400" />
+                        <span>Next-Gen Flight Booking Experience</span>
                     </div>
                 </div>
-            </section>
 
-            {/* Features Section */}
-            <section className="grid md:grid-cols-3 gap-8">
-                <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-purple-500/50 transition-all group">
-                    <div className="bg-gradient-to-br from-purple-500 to-pink-500 w-14 h-14 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <Zap className="h-7 w-7 text-white" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-white mb-3">Dynamic Pricing</h3>
-                    <p className="text-gray-400">
-                        Real-time price adjustments based on demand, availability, and timing.
-                        Get the best deals on your flights.
-                    </p>
-                </div>
+                {/* Main Heading */}
+                <h1
+                    className="text-6xl md:text-8xl lg:text-9xl font-black text-white mb-8 tracking-tight animate-fade-in-up"
+                    style={{
+                        animationDelay: '0.2s',
+                        textShadow: '0 0 80px rgba(99, 102, 241, 0.5)'
+                    }}
+                >
+                    Travel
+                    <br />
+                    <span className="text-gradient-premium animate-gradient bg-clip-text">
+                        Without Limits
+                    </span>
+                </h1>
 
-                <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-purple-500/50 transition-all group">
-                    <div className="bg-gradient-to-br from-green-500 to-emerald-500 w-14 h-14 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <Shield className="h-7 w-7 text-white" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-white mb-3">Secure Booking</h3>
-                    <p className="text-gray-400">
-                        Concurrency-safe seat reservations ensure your booking is protected.
-                        No double bookings, guaranteed.
-                    </p>
-                </div>
+                {/* Subtitle */}
+                <p
+                    className="text-xl md:text-2xl text-white/70 font-light max-w-2xl mb-14 leading-relaxed animate-fade-in-up"
+                    style={{ animationDelay: '0.4s' }}
+                >
+                    Book flights instantly with real-time dynamic pricing.
+                    Secure, seamless, and designed for the modern traveler.
+                </p>
 
-                <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-purple-500/50 transition-all group">
-                    <div className="bg-gradient-to-br from-orange-500 to-red-500 w-14 h-14 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <Clock className="h-7 w-7 text-white" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-white mb-3">Instant Confirmation</h3>
-                    <p className="text-gray-400">
-                        Get your unique PNR instantly after booking.
-                        Check your booking status anytime, anywhere.
-                    </p>
-                </div>
-            </section>
-
-            {/* How It Works */}
-            <section className="bg-white/5 backdrop-blur-sm rounded-3xl p-12 border border-white/10">
-                <h2 className="text-3xl font-bold text-white text-center mb-12">How It Works</h2>
-                <div className="grid md:grid-cols-4 gap-8">
-                    <div className="text-center">
-                        <div className="bg-purple-500/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 relative">
-                            <Search className="h-8 w-8 text-purple-400" />
-                            <span className="absolute -top-2 -right-2 bg-purple-600 text-white w-6 h-6 rounded-full text-sm flex items-center justify-center">1</span>
-                        </div>
-                        <h4 className="text-white font-semibold mb-2">Search Flights</h4>
-                        <p className="text-gray-400 text-sm">Find flights by source, destination, and date</p>
-                    </div>
-
-                    <div className="text-center">
-                        <div className="bg-pink-500/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 relative">
-                            <Plane className="h-8 w-8 text-pink-400" />
-                            <span className="absolute -top-2 -right-2 bg-pink-600 text-white w-6 h-6 rounded-full text-sm flex items-center justify-center">2</span>
-                        </div>
-                        <h4 className="text-white font-semibold mb-2">Select Seat</h4>
-                        <p className="text-gray-400 text-sm">Choose your preferred seat on the flight</p>
-                    </div>
-
-                    <div className="text-center">
-                        <div className="bg-orange-500/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 relative">
-                            <CreditCard className="h-8 w-8 text-orange-400" />
-                            <span className="absolute -top-2 -right-2 bg-orange-600 text-white w-6 h-6 rounded-full text-sm flex items-center justify-center">3</span>
-                        </div>
-                        <h4 className="text-white font-semibold mb-2">Pay Securely</h4>
-                        <p className="text-gray-400 text-sm">Complete payment with our secure gateway</p>
-                    </div>
-
-                    <div className="text-center">
-                        <div className="bg-green-500/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 relative">
-                            <CheckCircle className="h-8 w-8 text-green-400" />
-                            <span className="absolute -top-2 -right-2 bg-green-600 text-white w-6 h-6 rounded-full text-sm flex items-center justify-center">4</span>
-                        </div>
-                        <h4 className="text-white font-semibold mb-2">Get PNR</h4>
-                        <p className="text-gray-400 text-sm">Receive instant booking confirmation</p>
-                    </div>
-                </div>
-            </section>
-
-            {/* CTA Section */}
-            <section className="text-center py-12">
-                <div className="bg-gradient-to-r from-purple-600/20 to-pink-600/20 backdrop-blur-sm rounded-3xl p-12 border border-purple-500/30">
-                    <h2 className="text-3xl font-bold text-white mb-4">Ready to Fly?</h2>
-                    <p className="text-gray-300 mb-8 max-w-xl mx-auto">
-                        Join thousands of travelers who trust SkyBook for their flight bookings.
-                    </p>
-                    <Link
-                        to="/flights"
-                        className="inline-flex items-center gap-2 bg-white text-purple-600 px-8 py-4 rounded-xl font-semibold hover:bg-gray-100 transition-all"
+                {/* CTA Buttons */}
+                <div
+                    className="flex flex-col sm:flex-row gap-5 animate-fade-in-up"
+                    style={{ animationDelay: '0.6s' }}
+                >
+                    <button
+                        onClick={() => navigate('/flights')}
+                        className="group relative px-10 py-5 rounded-2xl font-bold text-lg text-white overflow-hidden btn-premium"
                     >
-                        <Search className="h-5 w-5" />
-                        Start Searching
-                    </Link>
+                        <span className="relative z-10 flex items-center gap-3">
+                            Book Your Flight
+                            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                        </span>
+                    </button>
+
+                    <button
+                        onClick={() => navigate('/flights')}
+                        className="px-10 py-5 rounded-2xl font-bold text-lg text-white btn-glass"
+                    >
+                        Explore Destinations
+                    </button>
                 </div>
-            </section>
+
+                {/* Stats Row */}
+                <div
+                    className="flex flex-wrap justify-center gap-12 mt-20 animate-fade-in-up"
+                    style={{ animationDelay: '0.8s' }}
+                >
+                    <div className="text-center">
+                        <p className="text-4xl md:text-5xl font-bold text-white text-glow">500+</p>
+                        <p className="text-white/50 mt-2">Daily Flights</p>
+                    </div>
+                    <div className="text-center">
+                        <p className="text-4xl md:text-5xl font-bold text-white text-glow">50K+</p>
+                        <p className="text-white/50 mt-2">Happy Travelers</p>
+                    </div>
+                    <div className="text-center">
+                        <p className="text-4xl md:text-5xl font-bold text-white text-glow">99%</p>
+                        <p className="text-white/50 mt-2">On-Time Rate</p>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };

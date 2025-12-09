@@ -83,6 +83,7 @@ def authenticate_user(db: Session, email: str, password: str) -> TokenResponse:
             name=user.name,
             email=user.email,
             mobile_no=user.mobile_no,
+            is_admin=user.is_admin or 0,
             created_at=user.created_at
         )
     )

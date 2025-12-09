@@ -1,19 +1,19 @@
 """
 Database connection and session management for the Flight Booking App.
-Uses SQLAlchemy with SQLite for development.
+Uses SQLAlchemy with PostgreSQL on Render.
 """
 
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-# SQLite database URL - creates file in project root
-SQLALCHEMY_DATABASE_URL = "sqlite:///./flight_booking.db"
+# PostgreSQL database URL on Render (external hostname for outside connections)
+SQLALCHEMY_DATABASE_URL = "postgresql://sample_k90q_user:uCR7KRcyZDKNPmftvT1pWSRlAYOWvvx4@dpg-d4pe9a24i8rc73co0q70-a.oregon-postgres.render.com/sample_k90q"
 
-# Create engine with connection arguments for SQLite
+# Create engine for PostgreSQL with SSL required for Render
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL,
-    connect_args={"check_same_thread": False}  # Required for SQLite
+    connect_args={"sslmode": "require"}
 )
 
 # Session factory

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { flightAPI, bookingAPI } from '../services/api';
 import { useAuth } from '../context/AuthContext';
-import { Plane, MapPin, Clock, IndianRupee, ArrowRight, Check, TrendingUp, TrendingDown, AlertCircle } from 'lucide-react';
+import { Plane, Clock, IndianRupee, ArrowRight, Check, TrendingUp, TrendingDown, AlertCircle, Loader2 } from 'lucide-react';
 import LoadingSpinner from '../components/LoadingSpinner';
 import toast from 'react-hot-toast';
 
@@ -114,14 +114,17 @@ const FlightDetails = () => {
     return (
         <div className="space-y-8">
             {/* Flight Overview */}
-            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
-                <div className="flex items-center gap-4 mb-6">
-                    <div className="bg-gradient-to-br from-purple-600 to-pink-600 w-16 h-16 rounded-xl flex items-center justify-center">
-                        <Plane className="h-8 w-8 text-white" />
+            <div className="glass-card rounded-3xl p-8 animate-fade-in-up">
+                <div className="flex items-center gap-4 mb-8">
+                    <div className="relative">
+                        <div className="absolute inset-0 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl blur opacity-50"></div>
+                        <div className="relative bg-gradient-to-br from-indigo-500 to-purple-600 w-16 h-16 rounded-xl flex items-center justify-center">
+                            <Plane className="h-8 w-8 text-white" />
+                        </div>
                     </div>
                     <div>
                         <h1 className="text-2xl font-bold text-white">{flight.airline}</h1>
-                        <p className="text-gray-400">{flight.flight_number}</p>
+                        <p className="text-white/50">{flight.flight_number}</p>
                     </div>
                 </div>
 
@@ -131,67 +134,67 @@ const FlightDetails = () => {
                         <div className="flex items-center gap-8">
                             <div>
                                 <p className="text-4xl font-bold text-white">{formatTime(flight.departure_time)}</p>
-                                <p className="text-xl text-gray-300 mt-1">{flight.source}</p>
-                                <p className="text-gray-500">{formatDate(flight.departure_time)}</p>
+                                <p className="text-xl text-white/70 mt-2">{flight.source}</p>
+                                <p className="text-white/40 text-sm">{formatDate(flight.departure_time)}</p>
                             </div>
 
                             <div className="flex-1 flex flex-col items-center">
-                                <div className="flex items-center gap-2 text-gray-400">
+                                <div className="flex items-center gap-2 text-white/50">
                                     <Clock className="h-5 w-5" />
-                                    <span>{Math.floor((new Date(flight.arrival_time) - new Date(flight.departure_time)) / 60000)} min</span>
+                                    <span className="font-medium">{Math.floor((new Date(flight.arrival_time) - new Date(flight.departure_time)) / 60000)} min</span>
                                 </div>
-                                <div className="w-full flex items-center gap-2 my-3">
-                                    <div className="h-1 flex-1 bg-gradient-to-r from-purple-500 to-transparent rounded"></div>
-                                    <div className="bg-purple-600 p-2 rounded-full">
+                                <div className="w-full flex items-center gap-2 my-4">
+                                    <div className="h-1 flex-1 bg-gradient-to-r from-indigo-500 to-transparent rounded"></div>
+                                    <div className="bg-gradient-to-r from-indigo-500 to-purple-500 p-2 rounded-full">
                                         <ArrowRight className="h-4 w-4 text-white" />
                                     </div>
-                                    <div className="h-1 flex-1 bg-gradient-to-l from-pink-500 to-transparent rounded"></div>
+                                    <div className="h-1 flex-1 bg-gradient-to-l from-purple-500 to-transparent rounded"></div>
                                 </div>
-                                <p className="text-gray-500 text-sm">Non-stop</p>
+                                <p className="text-white/40 text-sm font-medium">Non-stop</p>
                             </div>
 
                             <div className="text-right">
                                 <p className="text-4xl font-bold text-white">{formatTime(flight.arrival_time)}</p>
-                                <p className="text-xl text-gray-300 mt-1">{flight.destination}</p>
-                                <p className="text-gray-500">{formatDate(flight.arrival_time)}</p>
+                                <p className="text-xl text-white/70 mt-2">{flight.destination}</p>
+                                <p className="text-white/40 text-sm">{formatDate(flight.arrival_time)}</p>
                             </div>
                         </div>
                     </div>
 
                     {/* Price */}
-                    <div className="bg-gradient-to-br from-purple-600/20 to-pink-600/20 rounded-xl p-6 border border-purple-500/30">
-                        <p className="text-gray-400 text-sm mb-2">Dynamic Price</p>
+                    <div className="glass-card rounded-2xl p-6 border-indigo-500/20">
+                        <p className="text-white/50 text-sm mb-3 font-medium">Dynamic Price</p>
                         <div className="flex items-baseline gap-2">
                             <IndianRupee className="h-6 w-6 text-white" />
                             <span className="text-4xl font-bold text-white">{flight.dynamic_price.toLocaleString()}</span>
                         </div>
                         {pricing && (
-                            <div className="mt-4 space-y-2 text-sm">
-                                <div className="flex justify-between text-gray-400">
+                            <div className="mt-6 space-y-3 text-sm">
+                                <div className="flex justify-between text-white/50">
                                     <span>Base Price</span>
                                     <span>₹{pricing.base_price.toLocaleString()}</span>
                                 </div>
-                                <div className="flex justify-between text-gray-400">
+                                <div className="flex justify-between text-white/50">
                                     <span>Seat Factor</span>
                                     <span className="flex items-center gap-1">
-                                        {pricing.seat_factor > 1 && <TrendingUp className="h-3 w-3 text-red-400" />}
+                                        {pricing.seat_factor > 1 && <TrendingUp className="h-3 w-3 text-rose-400" />}
                                         {pricing.seat_factor.toFixed(2)}x
                                     </span>
                                 </div>
-                                <div className="flex justify-between text-gray-400">
+                                <div className="flex justify-between text-white/50">
                                     <span>Time Factor</span>
                                     <span className="flex items-center gap-1">
-                                        {pricing.time_factor > 1 && <TrendingUp className="h-3 w-3 text-red-400" />}
+                                        {pricing.time_factor > 1 && <TrendingUp className="h-3 w-3 text-rose-400" />}
                                         {pricing.time_factor.toFixed(2)}x
                                     </span>
                                 </div>
-                                <div className="flex justify-between text-gray-400">
+                                <div className="flex justify-between text-white/50">
                                     <span>Demand Factor</span>
                                     <span className="flex items-center gap-1">
                                         {pricing.demand_factor > 1 ? (
-                                            <TrendingUp className="h-3 w-3 text-red-400" />
+                                            <TrendingUp className="h-3 w-3 text-rose-400" />
                                         ) : (
-                                            <TrendingDown className="h-3 w-3 text-green-400" />
+                                            <TrendingDown className="h-3 w-3 text-emerald-400" />
                                         )}
                                         {pricing.demand_factor.toFixed(2)}x
                                     </span>
@@ -203,69 +206,69 @@ const FlightDetails = () => {
             </div>
 
             {/* Seat Selection */}
-            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
-                <h2 className="text-xl font-bold text-white mb-4">Select Your Seat</h2>
-                <p className="text-gray-400 mb-6">
+            <div className="glass-card rounded-3xl p-8 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+                <h2 className="text-xl font-bold text-white mb-2">Select Your Seat</h2>
+                <p className="text-white/50 mb-8">
                     {seats?.available_count} seats available out of {flight.total_seats}
                 </p>
 
                 {/* Legend */}
-                <div className="flex gap-6 mb-6">
-                    <div className="flex items-center gap-2">
-                        <div className="w-6 h-6 bg-white/10 rounded border border-white/20"></div>
-                        <span className="text-gray-400 text-sm">Available</span>
+                <div className="flex gap-8 mb-8">
+                    <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/10"></div>
+                        <span className="text-white/50 text-sm">Available</span>
                     </div>
-                    <div className="flex items-center gap-2">
-                        <div className="w-6 h-6 bg-purple-600 rounded"></div>
-                        <span className="text-gray-400 text-sm">Selected</span>
+                    <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-500"></div>
+                        <span className="text-white/50 text-sm">Selected</span>
                     </div>
-                    <div className="flex items-center gap-2">
-                        <div className="w-6 h-6 bg-red-500/30 rounded border border-red-500/50"></div>
-                        <span className="text-gray-400 text-sm">Booked</span>
+                    <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-lg bg-rose-500/20 border border-rose-500/30"></div>
+                        <span className="text-white/50 text-sm">Booked</span>
                     </div>
                 </div>
 
                 {/* Seat Grid */}
-                <div className="bg-white/5 rounded-xl p-6 max-h-96 overflow-y-auto">
-                    <div className="flex justify-center mb-4">
-                        <div className="bg-gradient-to-r from-purple-600 to-pink-600 px-8 py-2 rounded-t-xl text-white text-sm">
+                <div className="bg-white/5 rounded-2xl p-6 max-h-[400px] overflow-y-auto">
+                    <div className="flex justify-center mb-6">
+                        <div className="bg-gradient-to-r from-indigo-500 to-purple-500 px-8 py-2 rounded-t-xl text-white text-sm font-medium">
                             ✈️ Front of Aircraft
                         </div>
                     </div>
 
-                    <div className="flex flex-col items-center gap-1">
+                    <div className="flex flex-col items-center gap-2">
                         {seatGrid.slice(0, 30).map((row, rowIndex) => (
-                            <div key={rowIndex} className="flex items-center gap-1">
-                                <span className="text-gray-500 text-xs w-6 text-right">{rowIndex + 1}</span>
-                                <div className="flex gap-1">
+                            <div key={rowIndex} className="flex items-center gap-2">
+                                <span className="text-white/30 text-xs w-6 text-right font-mono">{rowIndex + 1}</span>
+                                <div className="flex gap-1.5">
                                     {row.slice(0, 3).map((seat) => (
                                         <button
                                             key={seat}
                                             onClick={() => handleSeatSelect(seat)}
                                             disabled={seats?.booked_seats.includes(seat)}
-                                            className={`w-8 h-8 rounded text-xs font-medium transition-all ${seats?.booked_seats.includes(seat)
-                                                    ? 'bg-red-500/30 border border-red-500/50 text-red-400 cursor-not-allowed'
+                                            className={`w-9 h-9 rounded-lg text-xs font-medium transition-all ${seats?.booked_seats.includes(seat)
+                                                    ? 'bg-rose-500/20 border border-rose-500/30 text-rose-400/50 cursor-not-allowed'
                                                     : selectedSeat === seat
-                                                        ? 'bg-purple-600 text-white scale-110'
-                                                        : 'bg-white/10 border border-white/20 text-gray-400 hover:bg-purple-500/30 hover:border-purple-500'
+                                                        ? 'bg-gradient-to-br from-indigo-500 to-purple-500 text-white scale-110 shadow-lg shadow-indigo-500/30'
+                                                        : 'bg-white/5 border border-white/10 text-white/40 hover:bg-indigo-500/20 hover:border-indigo-500/30 hover:text-white'
                                                 }`}
                                         >
                                             {seat}
                                         </button>
                                     ))}
                                 </div>
-                                <div className="w-8"></div>
-                                <div className="flex gap-1">
+                                <div className="w-10"></div>
+                                <div className="flex gap-1.5">
                                     {row.slice(3).map((seat) => (
                                         <button
                                             key={seat}
                                             onClick={() => handleSeatSelect(seat)}
                                             disabled={seats?.booked_seats.includes(seat)}
-                                            className={`w-8 h-8 rounded text-xs font-medium transition-all ${seats?.booked_seats.includes(seat)
-                                                    ? 'bg-red-500/30 border border-red-500/50 text-red-400 cursor-not-allowed'
+                                            className={`w-9 h-9 rounded-lg text-xs font-medium transition-all ${seats?.booked_seats.includes(seat)
+                                                    ? 'bg-rose-500/20 border border-rose-500/30 text-rose-400/50 cursor-not-allowed'
                                                     : selectedSeat === seat
-                                                        ? 'bg-purple-600 text-white scale-110'
-                                                        : 'bg-white/10 border border-white/20 text-gray-400 hover:bg-purple-500/30 hover:border-purple-500'
+                                                        ? 'bg-gradient-to-br from-indigo-500 to-purple-500 text-white scale-110 shadow-lg shadow-indigo-500/30'
+                                                        : 'bg-white/5 border border-white/10 text-white/40 hover:bg-indigo-500/20 hover:border-indigo-500/30 hover:text-white'
                                                 }`}
                                         >
                                             {seat}
@@ -279,28 +282,37 @@ const FlightDetails = () => {
 
                 {/* Selected Seat Info & Book Button */}
                 {selectedSeat && (
-                    <div className="mt-6 bg-purple-600/20 rounded-xl p-4 border border-purple-500/30 flex items-center justify-between">
+                    <div className="mt-8 glass-card rounded-2xl p-5 border-indigo-500/30 flex items-center justify-between animate-scale-in">
                         <div className="flex items-center gap-4">
-                            <Check className="h-6 w-6 text-purple-400" />
+                            <div className="p-3 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-500">
+                                <Check className="h-6 w-6 text-white" />
+                            </div>
                             <div>
-                                <p className="text-white font-semibold">Seat {selectedSeat} Selected</p>
-                                <p className="text-gray-400 text-sm">{getSeatType(selectedSeat)} Seat</p>
+                                <p className="text-white font-semibold text-lg">Seat {selectedSeat} Selected</p>
+                                <p className="text-white/50 text-sm">{getSeatType(selectedSeat)} Seat</p>
                             </div>
                         </div>
                         <button
                             onClick={handleBookSeat}
                             disabled={booking}
-                            className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-3 rounded-xl font-semibold hover:from-purple-700 hover:to-pink-700 transition-all disabled:opacity-50"
+                            className="btn-premium text-white px-8 py-4 rounded-xl font-semibold disabled:opacity-50 flex items-center gap-2"
                         >
-                            {booking ? 'Reserving...' : `Book Now - ₹${flight.dynamic_price.toLocaleString()}`}
+                            {booking ? (
+                                <>
+                                    <Loader2 className="h-5 w-5 animate-spin" />
+                                    Reserving...
+                                </>
+                            ) : (
+                                `Book Now - ₹${flight.dynamic_price.toLocaleString()}`
+                            )}
                         </button>
                     </div>
                 )}
 
                 {!isAuthenticated && (
-                    <div className="mt-6 bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-4 flex items-center gap-3">
-                        <AlertCircle className="h-5 w-5 text-yellow-500" />
-                        <p className="text-yellow-200 text-sm">Please login to book this flight</p>
+                    <div className="mt-8 bg-amber-500/10 border border-amber-500/30 rounded-2xl p-5 flex items-center gap-4">
+                        <AlertCircle className="h-6 w-6 text-amber-400" />
+                        <p className="text-amber-200">Please login to book this flight</p>
                     </div>
                 )}
             </div>

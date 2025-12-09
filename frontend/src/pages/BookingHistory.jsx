@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { bookingAPI } from '../services/api';
 import { useAuth } from '../context/AuthContext';
-import { Plane, Calendar, MapPin, Check, X, Clock, Search, Loader2 } from 'lucide-react';
+import { Plane, Calendar, Check, X, Clock, Search, Loader2 } from 'lucide-react';
 import LoadingSpinner from '../components/LoadingSpinner';
 import toast from 'react-hot-toast';
 
@@ -69,15 +69,15 @@ const BookingHistory = () => {
 
     const getStatusBadge = (status) => {
         const styles = {
-            PENDING: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
+            PENDING: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
             INFO_ADDED: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-            CONFIRMED: 'bg-green-500/20 text-green-400 border-green-500/30',
-            CANCELLED: 'bg-red-500/20 text-red-400 border-red-500/30',
-            FAILED: 'bg-gray-500/20 text-gray-400 border-gray-500/30',
+            CONFIRMED: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
+            CANCELLED: 'bg-rose-500/20 text-rose-400 border-rose-500/30',
+            FAILED: 'bg-slate-500/20 text-slate-400 border-slate-500/30',
         };
 
         return (
-            <span className={`px-3 py-1 rounded-full text-xs font-medium border ${styles[status] || styles.PENDING}`}>
+            <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${styles[status] || styles.PENDING}`}>
                 {status}
             </span>
         );
@@ -93,21 +93,21 @@ const BookingHistory = () => {
     };
 
     const BookingCard = ({ booking, showCancel = true }) => (
-        <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10 hover:border-purple-500/30 transition-all">
+        <div className="glass-card rounded-2xl p-6 hover:border-indigo-500/30 transition-all">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
                 <div className="flex items-center gap-4">
                     <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${booking.status === 'CONFIRMED'
-                        ? 'bg-green-500/20'
-                        : booking.status === 'CANCELLED'
-                            ? 'bg-red-500/20'
-                            : 'bg-purple-500/20'
+                            ? 'bg-emerald-500/20'
+                            : booking.status === 'CANCELLED'
+                                ? 'bg-rose-500/20'
+                                : 'bg-indigo-500/20'
                         }`}>
                         {booking.status === 'CONFIRMED' ? (
-                            <Check className="h-6 w-6 text-green-400" />
+                            <Check className="h-6 w-6 text-emerald-400" />
                         ) : booking.status === 'CANCELLED' ? (
-                            <X className="h-6 w-6 text-red-400" />
+                            <X className="h-6 w-6 text-rose-400" />
                         ) : (
-                            <Clock className="h-6 w-6 text-purple-400" />
+                            <Clock className="h-6 w-6 text-indigo-400" />
                         )}
                     </div>
                     <div>
@@ -117,7 +117,7 @@ const BookingHistory = () => {
                             </h3>
                             {getStatusBadge(booking.status)}
                         </div>
-                        <p className="text-gray-400 text-sm">
+                        <p className="text-white/40 text-sm">
                             {booking.flight?.airline || 'Unknown Airline'}
                         </p>
                     </div>
@@ -127,41 +127,40 @@ const BookingHistory = () => {
                     <div className="flex items-center gap-4">
                         <div className="text-center">
                             <p className="text-white font-medium">{booking.flight?.source}</p>
-                            <p className="text-gray-500 text-xs">
+                            <p className="text-white/30 text-xs">
                                 {booking.flight?.departure_time && formatDateTime(booking.flight.departure_time)}
                             </p>
                         </div>
-                        <Plane className="h-4 w-4 text-purple-400 rotate-90" />
+                        <Plane className="h-4 w-4 text-indigo-400 rotate-90" />
                         <div className="text-center">
                             <p className="text-white font-medium">{booking.flight?.destination}</p>
-                            <p className="text-gray-500 text-xs">
+                            <p className="text-white/30 text-xs">
                                 {booking.flight?.arrival_time && formatDateTime(booking.flight.arrival_time)}
                             </p>
                         </div>
                     </div>
 
                     <div className="text-center">
-                        <p className="text-gray-400 text-xs">Seat</p>
+                        <p className="text-white/40 text-xs">Seat</p>
                         <p className="text-white font-semibold">{booking.seat_no}</p>
                     </div>
 
                     {booking.pnr && (
                         <div className="text-center">
-                            <p className="text-gray-400 text-xs">PNR</p>
+                            <p className="text-white/40 text-xs">PNR</p>
                             <p className="text-white font-mono font-bold">{booking.pnr}</p>
                         </div>
                     )}
 
                     <div className="text-right">
-                        <p className="text-gray-400 text-xs">Amount</p>
+                        <p className="text-white/40 text-xs">Amount</p>
                         <p className="text-white font-bold">₹{booking.final_price?.toLocaleString()}</p>
                     </div>
 
-                    {/* View Ticket Button for confirmed bookings */}
                     {booking.status === 'CONFIRMED' && (
                         <button
                             onClick={() => navigate(`/ticket/${booking.id}`)}
-                            className="bg-green-500/20 text-green-400 px-4 py-2 rounded-lg hover:bg-green-500/30 transition-all text-sm border border-green-500/30"
+                            className="bg-emerald-500/20 text-emerald-400 px-4 py-2.5 rounded-xl hover:bg-emerald-500/30 transition-all text-sm font-medium border border-emerald-500/30"
                         >
                             View Ticket
                         </button>
@@ -171,7 +170,7 @@ const BookingHistory = () => {
                         <button
                             onClick={() => handleCancel(booking.id)}
                             disabled={cancelling === booking.id}
-                            className="bg-red-500/20 text-red-400 px-4 py-2 rounded-lg hover:bg-red-500/30 transition-all text-sm border border-red-500/30 disabled:opacity-50"
+                            className="bg-rose-500/20 text-rose-400 px-4 py-2.5 rounded-xl hover:bg-rose-500/30 transition-all text-sm font-medium border border-rose-500/30 disabled:opacity-50"
                         >
                             {cancelling === booking.id ? (
                                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -184,7 +183,7 @@ const BookingHistory = () => {
             </div>
 
             {booking.passenger_name && (
-                <div className="mt-4 pt-4 border-t border-white/10 text-sm text-gray-400">
+                <div className="mt-4 pt-4 border-t border-white/10 text-sm text-white/40">
                     Passenger: <span className="text-white">{booking.passenger_name}</span>
                     {booking.passenger_email && (
                         <span className="ml-4">• {booking.passenger_email}</span>
@@ -197,9 +196,11 @@ const BookingHistory = () => {
     return (
         <div className="space-y-8">
             {/* PNR Search */}
-            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
-                <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-3">
-                    <Search className="h-6 w-6 text-purple-400" />
+            <div className="glass-card rounded-3xl p-8 animate-fade-in-up">
+                <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-4">
+                    <div className="p-3 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600">
+                        <Search className="h-6 w-6 text-white" />
+                    </div>
                     Look Up Booking by PNR
                 </h2>
 
@@ -210,12 +211,12 @@ const BookingHistory = () => {
                         onChange={(e) => setPnrSearch(e.target.value.toUpperCase())}
                         placeholder="Enter 6-character PNR"
                         maxLength={6}
-                        className="flex-1 bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 font-mono uppercase tracking-widest"
+                        className="flex-1 input-premium rounded-xl py-4 px-5 text-white placeholder-white/30 focus:outline-none font-mono uppercase tracking-[0.3em] text-center"
                     />
                     <button
                         type="submit"
                         disabled={searching || pnrSearch.length !== 6}
-                        className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-purple-700 hover:to-pink-700 transition-all disabled:opacity-50 flex items-center gap-2"
+                        className="btn-premium text-white px-8 py-4 rounded-xl font-semibold flex items-center gap-3 disabled:opacity-50"
                     >
                         {searching ? <Loader2 className="h-5 w-5 animate-spin" /> : <Search className="h-5 w-5" />}
                         Search
@@ -223,8 +224,8 @@ const BookingHistory = () => {
                 </form>
 
                 {searchResult && (
-                    <div className="mt-6">
-                        <p className="text-gray-400 text-sm mb-3">Search Result:</p>
+                    <div className="mt-6 animate-fade-in-up">
+                        <p className="text-white/50 text-sm mb-3">Search Result:</p>
                         <BookingCard booking={searchResult} showCancel={false} />
                     </div>
                 )}
@@ -233,29 +234,35 @@ const BookingHistory = () => {
             {/* My Bookings */}
             {isAuthenticated && (
                 <div>
-                    <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-                        <Calendar className="h-6 w-6 text-purple-400" />
+                    <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-4 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+                        <div className="p-3 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600">
+                            <Calendar className="h-6 w-6 text-white" />
+                        </div>
                         My Bookings
                     </h2>
 
                     {loading ? (
                         <LoadingSpinner text="Loading your bookings..." />
                     ) : bookings.length === 0 ? (
-                        <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-12 border border-white/10 text-center">
-                            <Plane className="h-16 w-16 text-gray-600 mx-auto mb-4" />
-                            <h3 className="text-xl text-gray-400">No bookings yet</h3>
-                            <p className="text-gray-500 mt-2">Start by searching for flights</p>
+                        <div className="glass-card rounded-3xl p-16 text-center animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+                            <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-white/5 mb-6">
+                                <Plane className="h-10 w-10 text-white/30" />
+                            </div>
+                            <h3 className="text-xl text-white/60 font-medium">No bookings yet</h3>
+                            <p className="text-white/40 mt-2">Start by searching for flights</p>
                             <button
                                 onClick={() => navigate('/flights')}
-                                className="mt-6 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-purple-700 hover:to-pink-700 transition-all"
+                                className="mt-8 btn-premium text-white px-8 py-4 rounded-xl font-semibold"
                             >
                                 Search Flights
                             </button>
                         </div>
                     ) : (
                         <div className="space-y-4">
-                            {bookings.map((booking) => (
-                                <BookingCard key={booking.id} booking={booking} />
+                            {bookings.map((booking, index) => (
+                                <div key={booking.id} className="animate-fade-in-up" style={{ animationDelay: `${(index + 2) * 0.1}s` }}>
+                                    <BookingCard booking={booking} />
+                                </div>
                             ))}
                         </div>
                     )}
@@ -263,11 +270,11 @@ const BookingHistory = () => {
             )}
 
             {!isAuthenticated && (
-                <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-12 border border-white/10 text-center">
-                    <p className="text-gray-400 mb-4">Login to view your booking history</p>
+                <div className="glass-card rounded-3xl p-16 text-center animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+                    <p className="text-white/50 mb-6">Login to view your booking history</p>
                     <button
                         onClick={() => navigate('/login')}
-                        className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-purple-700 hover:to-pink-700 transition-all"
+                        className="btn-premium text-white px-8 py-4 rounded-xl font-semibold"
                     >
                         Login
                     </button>
