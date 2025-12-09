@@ -86,13 +86,21 @@ Most endpoints require a Bearer token. Get one via `/api/users/login`.
     lifespan=lifespan
 )
 
-# Configure CORS
+# Configure CORS - Allow requests from frontend domains
+origins = [
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "https://skybook71.netlify.app",
+    "https://*.netlify.app",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Configure appropriately for production
+    allow_origins=["*"],  # Allow all origins for flexibility
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
 
 # Register routers
