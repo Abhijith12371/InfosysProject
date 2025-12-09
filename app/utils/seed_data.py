@@ -6,13 +6,9 @@ Run this to initialize the database with test data.
 from datetime import datetime, timedelta
 import random
 from sqlalchemy.orm import Session
-from passlib.context import CryptContext
 
 from app.database.models import Flight, User
-
-
-# Password hashing
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+from app.utils.auth import hash_password
 
 
 # Sample data
@@ -65,7 +61,7 @@ def create_admin_user(db: Session) -> None:
     admin_user = User(
         name="Admin User",
         email=admin_email,
-        password_hash=pwd_context.hash("admin123"),
+        password_hash=hash_password("admin123"),
         is_admin=1
     )
     db.add(admin_user)
